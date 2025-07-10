@@ -5,7 +5,9 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -52,4 +54,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    protected function photos(): Attribute{
+        return Attribute::make(
+            get: function ($value) {
+                $paths = json_decode($value, true); // تأكد أن القيمة مصفوفة
+                if (!is_array($paths)) return [];
+                return array_map(fn($path) => Storage::disk('public')->url($path), $paths);
+            },
+        );
+   }
 }
