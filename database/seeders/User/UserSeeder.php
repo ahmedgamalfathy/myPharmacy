@@ -21,9 +21,9 @@ class UserSeeder extends Seeder
         try {
 
             $user = new User();
-            $user->name = 'admin';
-            $user->email = 'admin@admin.com';
-            $user->password = '12345678';
+            $user->name = 'ahmedgamal';
+            $user->email = 'ahmedgamalfathy39@gmail.com';
+            $user->password = 'Ag12345678';
             $user->user_type = 3;
             $user->is_active = UserStatus::ACTIVE;
             $user->email_verified_at = now();

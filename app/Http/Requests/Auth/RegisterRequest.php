@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests\Auth;
 
+use Illuminate\Validation\Rule;
+use App\Enums\User\UserTypeEnum;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class RegisterRequest extends FormRequest
 {
@@ -22,23 +25,21 @@ class RegisterRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array
-    {
+    {//name , email , user_type , Photos , password
         return [
             'name' => 'required',
             'email'=> 'required|email|unique:users,email',
-            'phone' => '',
-            'birthDate' => '',
-            'status' => 'required',
             'password'=> [
                 'required',
                 'min:8',
                 'regex:/^.*(?=.{1,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/'
             ],
-            'userType'=> '',
+            'userType'=> ['required',new Enum( UserTypeEnum::class)],
+            'photos'=>['required','image']
         ];
     }
 
-    public function failedValidation(Validator $validator) 
+    public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
             'message' => $validator->errors()

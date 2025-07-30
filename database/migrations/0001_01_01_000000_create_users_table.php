@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('code')->nullable();
+            $table->timestamp('expired_at')->nullable();
             $table->boolean('is_active')->default(IsActiveEnum::INACTIVE->value);
-            $table->tinyInteger('user_type');
+            $table->tinyInteger('user_type')->default(UserTypeEnum::PHARMACY->value);
             $table->json('photos')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

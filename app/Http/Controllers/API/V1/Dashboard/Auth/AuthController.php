@@ -8,6 +8,7 @@ use App\Services\Auth\AuthService;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
@@ -20,8 +21,8 @@ class AuthController extends Controller //implements HasMiddleware
         $this->authService = $authService;
     }
 
-    public function register(){
-        return $this->authService->register( Request()->all());
+    public function register(RegisterRequest $registerRequest){
+        return $this->authService->register( $registerRequest->validated());
     }
     public function login(LoginRequest $loginReq)
     {
