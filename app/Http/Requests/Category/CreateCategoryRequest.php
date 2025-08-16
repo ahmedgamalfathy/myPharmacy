@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Category;
 
+use App\Enums\IsActiveEnum;
 use App\Enums\Product\CategoryStatus;
 use App\Enums\ResponseCode\HttpStatusCode;
 use App\Helpers\ApiResponse;
@@ -31,12 +32,10 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required',
-                        Rule::unique('categories', 'name')->where(function ($query) {
-                            return $query->whereNull('parent_id'); // Only check uniqueness for main categories
-                        }),
+                        Rule::unique('categories', 'name')
                 ],
-            'subCategories' => 'nullable',
-            'isActive' => ['required', new Enum(CategoryStatus::class)],
+            'description' => 'nullable',
+            'status' => ['required', new Enum(IsActiveEnum::class)],
             'path' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:5120',
         ];
     }

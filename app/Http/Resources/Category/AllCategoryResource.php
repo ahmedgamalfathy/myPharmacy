@@ -15,13 +15,13 @@ class AllCategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
+ //name , location , address , status
         return [
             'categoryId' => $this->id,
             'name' => $this->name,
-            'isActive' => $this->is_active,
-            'path' => $this->path,
-
+            'status' => $this->status,
+            'description' => $this->description,
+            'path' => $this->image,
         ];
     }
 }

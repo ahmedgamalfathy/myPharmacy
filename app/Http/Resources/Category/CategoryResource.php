@@ -16,12 +16,12 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        return [//name , description , status, image
             'categoryId' => $this->id,
             'name' => $this->name,
-            'isActive' => $this->is_active,
-            'path' => $this->path,
-            'subCategories' => SubCategoryResource::collection($this->whenLoaded("subCategories")),
+            'status' => $this->status,
+            'description' => $this->description,
+            'path' => $this->image,
         ];
     }
 }

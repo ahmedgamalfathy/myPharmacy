@@ -1,10 +1,11 @@
 <?php
 
 use App\Enums\IsActiveEnum;
+use App\Models\Branch\Branch;
 use App\Enums\User\UserTypeEnum;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->json('photos')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignIdFor(Branch::class)->nullable()->cascadeOnDelet()->cascadeOnUpdate();
             $table->rememberToken();
             $table->timestamps();
         });

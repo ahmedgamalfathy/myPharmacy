@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
             $user->user_type = 3;
             $user->is_active = UserStatus::ACTIVE;
             $user->email_verified_at = now();
+            $user->branch_id =1;
             $user->save();
 
             $role = Role::where('name', 'super admin')->first();

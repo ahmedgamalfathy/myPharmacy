@@ -35,7 +35,8 @@ class RegisterRequest extends FormRequest
                 'regex:/^.*(?=.{1,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/'
             ],
             'userType'=> ['required',new Enum( UserTypeEnum::class)],
-            'photos'=>['required','image']
+            'photos' => ['required','array'],
+            'photos.*' => ['image','mimes:jpeg,png,jpg,gif,svg','max:5000'],
         ];
     }
 

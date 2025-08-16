@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Branch\Branch;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Storage;
@@ -62,5 +64,8 @@ class User extends Authenticatable
                 return array_map(fn($path) => Storage::disk('public')->url($path), $paths);
             },
         );
+   }
+   public function branch(){
+       return $this->belongsTo(Branch::class);
    }
 }
