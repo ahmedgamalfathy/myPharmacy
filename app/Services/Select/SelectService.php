@@ -67,6 +67,10 @@ class SelectService
             'permissions' => ['getAllPermissions', PermissionSelectService::class],
             'parameters' => ['getAllParameters', ParameterSelectService::class],
             'allProductActive' => ['getAllProducts', ProductSelectService::class],
+            'areas' => ['getAreas', AreaSelectService::class],
+            'areasub' => ['getSubAreas', AreaSelectService::class],
+            'allsubareas' => ['getAllSubAreas', AreaSelectService::class],
+
         ];
 
         $paramValue = null; // Initialize paramValue
