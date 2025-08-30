@@ -70,6 +70,9 @@ class SelectService
             'areas' => ['getAreas', AreaSelectService::class],
             'areasub' => ['getSubAreas', AreaSelectService::class],
             'allsubareas' => ['getAllSubAreas', AreaSelectService::class],
+            'branches' => ['branches', BranchSelectService::class],
+            'getAllBranchesUser' => ['getAllBranchesUser', BranchSelectService::class],
+            
 
         ];
 

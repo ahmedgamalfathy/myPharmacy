@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Select\SelectController;
 use App\Http\Controllers\Api\V1\Dashboard\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Dashboard\User\UserController;
-use App\Http\Controllers\API\V1\Dashboard\Areas\AreaController;
+use App\Http\Controllers\Api\V1\Dashboard\Areas\AreaController;
 use App\Http\Controllers\Api\V1\Mobile\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Dashboard\Order\OrderController;
 use App\Http\Controllers\Api\V1\Dashboard\Stats\StatsController;
@@ -70,7 +70,7 @@ Route::prefix('v1/mobile')->group(function () {
     ]);
     Route::get('check-Quantity',CheckQuantityController::class);
     Route::put('change-password', ChangePasswordWebsite::class);
-    
+
     Route::post('orders-auth',[AuthOrderController::class,'store']);
     Route::get('orders-auth/{id}',[AuthOrderController::class,'show']);
     Route::put('orders-update/{id}',[AuthOrderController::class,'update']);
