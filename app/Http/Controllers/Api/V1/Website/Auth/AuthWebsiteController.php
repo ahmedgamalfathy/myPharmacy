@@ -7,19 +7,21 @@ use App\Enums\IsActive;
 use App\Helpers\ApiResponse;
 use Illuminate\Http\Request;
 use App\Models\Client\Client;
+use App\Enums\User\UserStatus;
 use App\Enums\Client\ClientType;
+use App\Enums\Order\OrderStatus;
+use App\Models\Client\ClientUser;
 use Illuminate\Http\UploadedFile;
 use App\Enums\Client\ClientStatus;
-use App\Enums\Order\OrderStatus;
 use App\Services\User\UserService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Enum;
 use App\Services\Upload\UploadService;
 use Illuminate\Validation\Rules\Password;
 use App\Enums\ResponseCode\HttpStatusCode;
 use App\Http\Resources\Client\LoggedInClientResource;
-use App\Models\Client\ClientUser;
 
 class AuthWebsiteController extends Controller
 {
@@ -33,23 +35,31 @@ class AuthWebsiteController extends Controller
     public function register(Request $request){
        $data= $request->validate([
             "name"=>"required|string",
+            'phone' => ['required','integer'],
             "email"=>"required|string|email|unique:client_user,email",
             "password"=>["required",
             Password::min(8)->mixedCase()->numbers()],
+            'avatars' => ['required', 'array'],
+            'avatars.*' => ["required","image"],
+            'areaId' => 'required|integer|exists:areas,id',
             // 'avatar' => ["sometimes", "nullable","image", "mimes:jpeg,jpg,png,gif,svg", "max:5120"],
         ]);
-        $avatarPath = null;
-
-        // if(isset($data['avatar']) && $data['avatar'] instanceof UploadedFile){
-        //     $avatarPath =  $this->uploadService->uploadFile($data['avatar'], 'clientAvatars');
-        // }
+        $avatarPath =  [];
+        if(isset($data['avatars']) ){
+            foreach($data['avatars'] as $avatar)
+            {
+               $avatarPath[] =  $this->uploadService->uploadFile($avatar, 'avatars');
+            }
+        }
         $client = Client::create([
             "name" => $data['name'],
             "type" => ClientType::CLIENT->value
-        ]);
+        ]);//avatars, phone , area_id
       $user = ClientUser::create([
-            "avatar"=>$avatarPath,
+            "avatars"=>$avatarPath,
             "name"=>$data['name'],
+            'phone'=>$data['phone'],
+            'area_id'=>$data['areaId'],
             "password" =>Hash::make($data['password']),
             "email"=>$data['email'],
             "status"=> ClientStatus::ACTIVE->value,

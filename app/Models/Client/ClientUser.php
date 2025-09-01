@@ -27,16 +27,20 @@ class ClientUser extends  Authenticatable
     protected function casts(): array
     {
         return [
+            'avatars' => 'array',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
-    protected function avatar(): Attribute
-    {
+     protected function avatars(): Attribute{
         return Attribute::make(
-            get: fn ($value) => $value ? Storage::disk('public')->url($value) : "",
+            get: function ($value) {
+                $paths = json_decode($value, true); // تأكد أن القيمة مصفوفة
+                if (!is_array($paths)) return [];
+                return array_map(fn($path) => Storage::disk('public')->url($path), $paths);
+            },
         );
-    }
+   }
     public function client(){
         return $this->hasOne(Client::class);
     }

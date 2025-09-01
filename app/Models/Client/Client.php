@@ -7,8 +7,10 @@ use App\Models\Client\ClientEmail;
 use App\Models\Client\ClientPhone;
 use App\Models\Client\ClientAdrress;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
@@ -63,4 +65,5 @@ class Client extends Model
             $client->addresses()->withTrashed()->restore();
         });
     }
+
 }
