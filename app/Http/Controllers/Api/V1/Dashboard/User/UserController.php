@@ -115,10 +115,10 @@ class UserController extends Controller implements HasMiddleware
         try {
             DB::beginTransaction();
 
-            $this->userService->createUser($createUserRequest->validated());
+            $user =$this->userService->createUser($createUserRequest->validated());
             DB::commit();
 
-            return ApiResponse::success([], __('crud.created'));
+            return ApiResponse::success(new UserResource($user), __('crud.created'));
 
 
         } catch (\Exception $e) {
