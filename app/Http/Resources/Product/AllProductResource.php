@@ -35,7 +35,7 @@ class AllProductResource extends JsonResource
             "subCategoryId"=> $this->sub_category_id??"",
             "userName"=>User::find($this->user_id)->name,
             "branchName"=>Branch::find($this->branch_id)->name,
-            'description' => $this->description,
+            'description' => $this->description,//hello world 
         ];
     }
 }
