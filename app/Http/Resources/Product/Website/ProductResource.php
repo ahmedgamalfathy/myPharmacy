@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources\Product\Website;
 
-use App\Http\Resources\Category\CategoryResource;
-use App\Http\Resources\Product\Website\AllProductResource;
-use App\Http\Resources\ProductMedia\ProductMediaResouce;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Branch\Branch;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\ProductMedia\ProductMediaResouce;
+use App\Http\Resources\Product\Website\AllProductResource;
 
 class ProductResource extends JsonResource
 {
@@ -26,6 +28,8 @@ class ProductResource extends JsonResource
             "categoryId" => $this->category_id??"",
             "subCategoryId"=> $this->sub_category_id??"",
             "specifications"=> $this->specifications??"",
+            "userName"=>User::find($this->user_id)->name,
+            "branchName"=>Branch::find($this->branch_id)->name,
             "stock"=> ($this->quantity <= 0 || $this->quantity < 10) ? ($this->quantity <= 0 ? "" : $this->quantity) : "",
            'productMedia' =>$this->productMedia->isNotEmpty()? ProductMediaResouce::collection($this->productMedia): url('storage/ProductMedia/default-product.jpg'),
            "similarProducts" => AllProductResource::collection($this->getSimilarProduct())

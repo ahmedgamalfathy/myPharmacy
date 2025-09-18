@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources\Product;
 
+use App\Models\User;
 use App\Enums\IsMain;
 use Illuminate\Http\Request;
+use App\Models\Branch\Branch;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ProductMedia\ProductMediaResouce;
 
@@ -31,6 +33,8 @@ class AllProductResource extends JsonResource
             'quantity' => $this->quantity,
             "categoryId" => $this->category_id??"",
             "subCategoryId"=> $this->sub_category_id??"",
+            "userName"=>User::find($this->user_id)->name,
+            "branchName"=>Branch::find($this->branch_id)->name,
             'description' => $this->description,
         ];
     }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Website\Product;
 
-use App\Enums\IsActive;
+use App\Enums\isActive;
 use App\Filters\Product\FilterProductCategory;
 use App\Helpers\ApiResponse;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class ProductWebsiteController  extends Controller
     }
     public function index(Request $request)
     {
-        $categoryActive =Category::where('is_active',IsActive::ACTIVE->value)->pluck('id');
+        $categoryActive =Category::where('is_active',isActive::ACTIVE->value)->pluck('id');
 
          $products= QueryBuilder::for(Product::class)
          ->allowedFilters(['status',

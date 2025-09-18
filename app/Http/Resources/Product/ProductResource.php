@@ -2,10 +2,12 @@
 
 namespace App\Http\Resources\Product;
 
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Models\Branch\Branch;
+use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\ProductMedia\ProductMediaResouce;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
@@ -28,6 +30,8 @@ class ProductResource extends JsonResource
             "categoryId" => $this->category_id??"",
             "subCategoryId"=> $this->sub_category_id??"",
             "specifications"=>$this->specifications??"",
+            "userName"=>User::find($this->user_id)->name,
+            "branchName"=>Branch::find($this->branch_id)->name,
            'productMedia' =>$this->productMedia->isNotEmpty()? ProductMediaResouce::collection($this->productMedia) :url("storage/".'ProductMedia/default-product.jpg') ,
 
         ];
